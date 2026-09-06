@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Órdenes - Tech Store</title>
+
+    <link rel="stylesheet" href="../css/estilos.css">
+
+    <style>
+
+        .pagina-ordenes main {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 25px;
+        }
+
+        .encabezado-ordenes {
+            margin-bottom: 25px;
+        }
+
+        .encabezado-ordenes h2 {
+            margin-bottom: 8px;
+        }
+
+        .encabezado-ordenes p {
+            color: #666;
+        }
+
+        .tabla-ordenes {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .tabla-ordenes th,
+        .tabla-ordenes td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tabla-ordenes th {
+            background-color: #7c3aed;
+            color: white;
+        }
+
+        .tabla-ordenes tr:last-child td {
+            border-bottom: none;
+        }
+
+        .estado-orden {
+            font-weight: 700;
+        }
+
+        .boton-detalle {
+            display: inline-block;
+            background-color: #7c3aed;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .boton-detalle:hover {
+            background-color: #6d28d9;
+        }
+
+        .acciones-ordenes {
+            margin-top: 25px;
+        }
+
+        .acciones-ordenes a {
+          display: inline-block;
+          text-decoration: none;
+          font-weight: 700;
+          color: white;
+}
+
+        @media (max-width: 800px) {
+
+            .tabla-ordenes {
+                font-size: 13px;
+            }
+
+            .tabla-ordenes th,
+            .tabla-ordenes td {
+                padding: 10px 8px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body class="pagina-ordenes">
+
+
+<header>
+
+    <img src="../img/logo.png" alt="Logo Tech Store">
+
+    <h1>Tech Store</h1>
+
+    <nav>
+
+        <a href="productos-admin.html">Productos</a>
+
+        <a href="ordenes-admin.html">Órdenes</a>
+
+        <a href="../index.html">Inicio</a>
+
+        <a href="../pages/login.html" id="cerrarSesion">
+            Cerrar sesión
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main>
+
+    <section class="encabezado-ordenes">
+
+        <h2>Órdenes de compra</h2>
+
+        <p>
+            Revisa las órdenes realizadas por los clientes
+            y consulta el detalle de cada pedido.
+        </p>
+
+    </section>
+
+
+    <section>
+
+        <table class="tabla-ordenes">
+
+            <thead>
+
+                <tr>
+                    <th>N° Orden</th>
+                    <th>Cliente</th>
+                    <th>Fecha</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Detalle</th>
+                </tr>
+
+            </thead>
+
+            <tbody id="listaOrdenes">
+
+                <!-- Las órdenes se cargarán con JavaScript -->
+
+            </tbody>
+
+        </table>
+
+    </section>
+
+
+    <div class="acciones-ordenes">
+
+        <a href="productos-admin.html">
+            ← Volver a productos
+        </a>
+
+    </div>
+
+</main>
+
+
+<footer>
+
+    <p>
+        © 2026 Tech Store - Todos los derechos reservados
+    </p>
+
+</footer>
+
+
+<script src="../js/permisos.js"></script>
+
+<script src="../js/ordenes.js"></script>
+
+<script src="../js/sesion.js"></script>
+
+
+</body>
+
+</html>
