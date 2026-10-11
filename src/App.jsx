@@ -1,4 +1,8 @@
+import { listarProductos } from './data/productos'
+import { formatearPrecio } from './utils/formato'
+
 export default function App() {
+  const productos = listarProductos()
   return (
     <>
       <header>
@@ -7,8 +11,14 @@ export default function App() {
       </header>
       <main>
         <section>
-          <h2>Base React lista</h2>
-          <p>Si ves este texto con el estilo de TechStore, Bootstrap y estilos.css cargan bien.</p>
+          <h2>Prueba de datos ({productos.length} productos)</h2>
+          <ul>
+            {productos.map((p) => (
+              <li key={p.id}>
+                {p.nombre} - {formatearPrecio(p.precio)}
+              </li>
+            ))}
+          </ul>
         </section>
       </main>
     </>
