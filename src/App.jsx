@@ -1,31 +1,25 @@
+import { useState } from 'react'
 import { listarProductos } from './data/productos'
-import Logo from './components/atoms/Logo'
-import ProductImage from './components/atoms/ProductImage'
-import Price from './components/atoms/Price'
-import Button from './components/atoms/Button'
+import Navbar from './components/organisms/Navbar'
+import Footer from './components/organisms/Footer'
+import ProductCard from './components/molecules/ProductCard'
 
 export default function App() {
   const productos = listarProductos()
+  const [cantidad, setCantidad] = useState(0)
+
   return (
     <>
-      <header>
-        <Logo />
-        <h1>Tech Store</h1>
-      </header>
+      <Navbar cantidadCarrito={cantidad} />
       <main>
         <section>
-          <h2>Prueba de átomos</h2>
+          <h2>Catálogo de productos</h2>
           {productos.map((p) => (
-            <article key={p.id}>
-              <ProductImage src={p.imagen} alt={p.nombre} />
-              <h3>{p.nombre}</h3>
-              <p>{p.descripcion}</p>
-              <Price valor={p.oferta ? p.precioOferta : p.precio} original={p.oferta ? p.precio : null} />
-              <Button etiqueta="Agregar al carrito" onClick={() => alert('Agregaste ' + p.nombre)} />
-            </article>
+            <ProductCard key={p.id} producto={p} onAgregar={() => setCantidad(cantidad + 1)} />
           ))}
         </section>
       </main>
+      <Footer />
     </>
   )
 }
