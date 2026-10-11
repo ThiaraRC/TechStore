@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom'
 import Logo from '../atoms/Logo'
+import { useCarrito } from '../../context/CarritoContext'
 
-export default function Navbar({ cantidadCarrito = 0, usuario = null, onCerrarSesion }) {
+export default function Navbar({ usuario = null, onCerrarSesion }) {
+
+  const { cantidadCarrito } = useCarrito()
+
   return (
     <header>
       <Logo />
       <h1>Tech Store</h1>
+
       <nav>
         <Link to="/">Inicio</Link>
         <Link to="/productos">Productos</Link>
@@ -14,15 +19,19 @@ export default function Navbar({ cantidadCarrito = 0, usuario = null, onCerrarSe
         <Link to="/nosotros">Nosotros</Link>
         <Link to="/blog">Blog</Link>
         <Link to="/contacto">Contacto</Link>
+
         {usuario ? (
           <>
-            <span className="saludo-sesion">Hola, {usuario.nombre}</span>
+            <span className="saludo-sesion">
+              Hola, {usuario.nombre}
+            </span>
+
             <a
               href="/"
               className="cerrar-sesion"
               onClick={(e) => {
                 e.preventDefault()
-                onCerrarSesion()
+                onCerrarSesion?.()
               }}
             >
               Cerrar sesión
@@ -34,6 +43,7 @@ export default function Navbar({ cantidadCarrito = 0, usuario = null, onCerrarSe
             <Link to="/login">Login</Link>
           </>
         )}
+
         <Link to="/carrito" className="carrito">
           🛒 Carrito: <span>{cantidadCarrito}</span>
         </Link>
