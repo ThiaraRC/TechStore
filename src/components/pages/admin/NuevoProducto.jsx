@@ -19,6 +19,6 @@ export default function NuevoProducto() {
     <section>
       <h2>Nuevo producto</h2>
       <ProductoForm categorias={categorias} onGuardar={guardar} />
-    </section>
+    </section> 
   )
 }
