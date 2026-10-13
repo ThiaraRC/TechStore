@@ -1,18 +1,18 @@
-import { useParams, Link } from 'react-router-dom'
+import { useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import { obtenerProducto } from '../../data/productos'
+import { useCarrito } from '../../context/CarritoContext'
+import ProductImage from '../atoms/ProductImage'
+import Price from '../atoms/Price'
+import Button from '../atoms/Button'
 
 export default function DetalleProducto() {
-
   const { id } = useParams()
+  const { agregar } = useCarrito()
+  const [cantidad, setCantidad] = useState(1)
+  const [aviso, setAviso] = useState('')
 
   const producto = obtenerProducto(id)
-
-  const formatoPrecio = (precio) => {
-    return precio.toLocaleString('es-CL', {
-      style: 'currency',
-      currency: 'CLP',
-    })
-  }
 
   if (!producto) {
     return (
@@ -24,106 +24,61 @@ export default function DetalleProducto() {
     )
   }
 
-  const tieneOferta =
-    producto.oferta && producto.precioOferta > 0
+  const tieneOferta = producto.oferta && producto.precioOferta > 0
+  const precioFinal = tieneOferta ? producto.precioOferta : producto.precio
+  const agotado = producto.stock <= 0
+  const pocasUnidades = !agotado && producto.stock <= producto.stockCritico
 
-  const precioFinal = tieneOferta
-    ? producto.precioOferta
-    : producto.precio
+  const cambiar = (delta) => {
+    setCantidad((actual) => Math.min(Math.max(1, actual + delta), producto.stock))
+  }
+
+  const agregarAlCarrito = () => {
+    for (let i = 0; i < cantidad; i++) agregar(producto)
+    setAviso('Agregaste ' + cantidad + ' unidad(es) de ' + producto.nombre + ' al carrito.')
+  }
 
   return (
     <section>
+      <Link to="/productos">← Volver a productos</Link>
 
-      <Link to="/productos">
-        ← Volver a productos
-      </Link>
-
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '40px',
-          marginTop: '30px',
-          alignItems: 'center',
-        }}
-      >
-
-        <div style={{ flex: '1 1 300px' }}>
-
-          <img
-            src={producto.imagen}
-            alt={producto.nombre}
-            style={{
-              width: '100%',
-              maxHeight: '400px',
-              objectFit: 'contain',
-              background: 'white',
-              borderRadius: '15px',
-              padding: '20px',
-              boxSizing: 'border-box',
-            }}
-          />
-
+      <div className="row g-4 mt-2 align-items-center">
+        <div className="col-12 col-md-5 text-center">
+          <ProductImage src={producto.imagen} alt={producto.nombre} />
         </div>
 
-        <div style={{ flex: '1 1 300px' }}>
-
-          <h1>{producto.nombre}</h1>
-
+        <div className="col-12 col-md-7">
+          <h2>{producto.nombre}</h2>
           <p>
-            Código: {producto.codigo}
+            Código: {producto.codigo} | Categoría: {producto.categoria}
           </p>
-
-          <p>
-            Categoría: {producto.categoria}
-          </p>
-
-          <h3>Descripción</h3>
-
           <p>{producto.descripcion}</p>
 
-          {tieneOferta && (
-            <p>
-              Precio normal:
-              <del style={{ marginLeft: '10px' }}>
-                {formatoPrecio(producto.precio)}
-              </del>
-            </p>
-          )}
-
-          <h2 style={{ color: '#6415b8' }}>
-            {formatoPrecio(precioFinal)}
-          </h2>
-
-          {tieneOferta && (
-            <p style={{ color: 'red', fontWeight: 'bold' }}>
-              ¡Producto en oferta!
-            </p>
-          )}
+          <Price valor={precioFinal} original={tieneOferta ? producto.precio : null} />
+          {tieneOferta && <p className="text-danger fw-bold">¡Producto en oferta!</p>}
 
           <p>
             <strong>Stock disponible:</strong> {producto.stock}
           </p>
 
-          {producto.stock <= 0 ? (
-            <p style={{ color: 'red' }}>
-              Producto agotado
-            </p>
-          ) : producto.stock <= producto.stockCritico ? (
-            <p style={{ color: 'orange' }}>
-              ¡Últimas unidades disponibles!
-            </p>
-          ) : (
-            <p style={{ color: 'green' }}>
-              Producto disponible
-            </p>
+          {agotado && <p className="text-danger">Producto agotado</p>}
+          {pocasUnidades && <p className="text-warning">¡Últimas unidades disponibles!</p>}
+          {!agotado && !pocasUnidades && <p className="text-success">Producto disponible</p>}
+
+          {!agotado && (
+            <>
+              <div className="d-flex align-items-center gap-2 mb-3">
+                <Button etiqueta="-" onClick={() => cambiar(-1)} />
+                <span>{cantidad}</span>
+                <Button etiqueta="+" onClick={() => cambiar(1)} />
+              </div>
+              <Button etiqueta="Agregar al carrito" onClick={agregarAlCarrito} />
+            </>
           )}
 
+          {aviso && <p role="status">{aviso}</p>}
         </div>
-
       </div>
-
     </section>
   )
 }
-
