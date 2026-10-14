@@ -17,19 +17,34 @@ export default function Carrito() {
 
   if (items.length === 0) {
     return (
-      <section>
+      <section className="carrito-contenedor">
         <h2>Carrito de compras</h2>
-        <p>Tu carrito está vacío.</p>
 
-        <Link to="/productos">
-          Ir a productos
-        </Link>
+        <div className="carrito-vacio">
+          <div className="carrito-vacio-icono">
+            🛒
+          </div>
+
+          <h3>Tu carrito está vacío</h3>
+
+          <p>
+            Aún no has agregado productos.
+            Explora nuestra tienda y encuentra algo que te guste.
+          </p>
+
+          <Link
+            to="/productos"
+            className="carrito-vacio-boton"
+          >
+            Ver productos
+          </Link>
+        </div>
       </section>
     );
   }
 
   return (
-    <section>
+    <section className="carrito-contenedor">
       <h2>Carrito de compras</h2>
 
       <CartList

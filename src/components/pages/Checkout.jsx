@@ -75,133 +75,231 @@ export default function Checkout() {
   };
 
   return (
-    <section>
-      <h2>Finalizar compra</h2>
+    <section className="checkout-contenedor">
 
-      <div className="row g-4">
+      <div className="checkout-encabezado">
+        <span>COMPRA SEGURA</span>
+        <h2>Finalizar compra</h2>
+        <p>
+          Completa tus datos de entrega y revisa tu pedido antes de continuar.
+        </p>
+      </div>
 
-        <div className="col-md-7">
-          <form onSubmit={pagar}>
+      <div className="row g-4 align-items-start">
 
-            <div className="row g-3">
+        {/* DATOS DE ENTREGA */}
+        <div className="col-12 col-lg-7">
 
-              <div className="col-md-6">
-                <label htmlFor="nombre">Nombre</label>
+          <div className="checkout-tarjeta">
 
-                <input
-                  id="nombre"
-                  name="nombre"
-                  value={form.nombre}
-                  onChange={cambiar}
-                />
+            <div className="checkout-titulo-seccion">
+              <div className="checkout-icono">
+                📦
               </div>
 
-              <div className="col-md-6">
-                <label htmlFor="apellidos">Apellidos</label>
+              <div>
+                <h3>Datos de entrega</h3>
+                <p>Ingresa la información para recibir tu compra.</p>
+              </div>
+            </div>
 
-                <input
-                  id="apellidos"
-                  name="apellidos"
-                  value={form.apellidos}
-                  onChange={cambiar}
-                />
+            <form
+              className="checkout-formulario"
+              onSubmit={pagar}
+            >
+
+              <div className="row g-3">
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="nombre">
+                    Nombre
+                  </label>
+
+                  <input
+                    id="nombre"
+                    name="nombre"
+                    value={form.nombre}
+                    onChange={cambiar}
+                    placeholder="Tu nombre"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="apellidos">
+                    Apellidos
+                  </label>
+
+                  <input
+                    id="apellidos"
+                    name="apellidos"
+                    value={form.apellidos}
+                    onChange={cambiar}
+                    placeholder="Tus apellidos"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="correo">
+                    Correo electrónico
+                  </label>
+
+                  <input
+                    id="correo"
+                    name="correo"
+                    type="email"
+                    value={form.correo}
+                    onChange={cambiar}
+                    placeholder="correo@ejemplo.cl"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="calle">
+                    Calle
+                  </label>
+
+                  <input
+                    id="calle"
+                    name="calle"
+                    value={form.calle}
+                    onChange={cambiar}
+                    placeholder="Nombre de calle y número"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="departamento">
+                    Departamento
+                  </label>
+
+                  <input
+                    id="departamento"
+                    name="departamento"
+                    value={form.departamento}
+                    onChange={cambiar}
+                    placeholder="Opcional"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="region">
+                    Región
+                  </label>
+
+                  <input
+                    id="region"
+                    name="region"
+                    value={form.region}
+                    onChange={cambiar}
+                    placeholder="Ej: Metropolitana"
+                  />
+                </div>
+
+                <div className="col-12 col-md-6">
+                  <label htmlFor="comuna">
+                    Comuna
+                  </label>
+
+                  <input
+                    id="comuna"
+                    name="comuna"
+                    value={form.comuna}
+                    onChange={cambiar}
+                    placeholder="Ej: Independencia"
+                  />
+                </div>
+
+                <div className="col-12">
+                  <label htmlFor="indicaciones">
+                    Indicaciones de entrega
+                  </label>
+
+                  <textarea
+                    id="indicaciones"
+                    name="indicaciones"
+                    value={form.indicaciones}
+                    onChange={cambiar}
+                    placeholder="Ej: llamar al llegar, dejar en conserjería..."
+                    rows="4"
+                  />
+                </div>
+
               </div>
 
-              <div className="col-md-6">
-                <label htmlFor="correo">Correo</label>
+              <button
+                type="submit"
+                className="checkout-boton-pagar checkout-boton-movil"
+              >
+                Finalizar compra
+              </button>
 
-                <input
-                  id="correo"
-                  name="correo"
-                  type="email"
-                  value={form.correo}
-                  onChange={cambiar}
-                />
-              </div>
+            </form>
 
-              <div className="col-md-6">
-                <label htmlFor="calle">Calle</label>
+          </div>
+        </div>
 
-                <input
-                  id="calle"
-                  name="calle"
-                  value={form.calle}
-                  onChange={cambiar}
-                />
-              </div>
 
-              <div className="col-md-6">
-                <label htmlFor="departamento">
-                  Departamento
-                </label>
+        {/* RESUMEN DE COMPRA */}
+        <div className="col-12 col-lg-5">
 
-                <input
-                  id="departamento"
-                  name="departamento"
-                  value={form.departamento}
-                  onChange={cambiar}
-                />
-              </div>
+          <div className="checkout-resumen">
 
-              <div className="col-md-6">
-                <label htmlFor="region">Región</label>
+            <div className="checkout-resumen-titulo">
+              <span>🛒</span>
+              <h3>Resumen de compra</h3>
+            </div>
 
-                <input
-                  id="region"
-                  name="region"
-                  value={form.region}
-                  onChange={cambiar}
-                />
-              </div>
+            <div className="checkout-productos">
 
-              <div className="col-md-6">
-                <label htmlFor="comuna">Comuna</label>
+              {items.map((item) => (
+                <div
+                  className="checkout-producto"
+                  key={item.id}
+                >
+                  <div>
+                    <strong>{item.nombre}</strong>
 
-                <input
-                  id="comuna"
-                  name="comuna"
-                  value={form.comuna}
-                  onChange={cambiar}
-                />
-              </div>
+                    <span>
+                      Cantidad: {item.cantidad}
+                    </span>
+                  </div>
 
-              <div className="col-12">
-                <label htmlFor="indicaciones">
-                  Indicaciones
-                </label>
-
-                <textarea
-                  id="indicaciones"
-                  name="indicaciones"
-                  value={form.indicaciones}
-                  onChange={cambiar}
-                />
-              </div>
+                  <Price
+                    valor={item.precio * item.cantidad}
+                  />
+                </div>
+              ))}
 
             </div>
 
-            <button type="submit">
-              Pagar
+            <div className="checkout-linea" />
+
+            <div className="checkout-total">
+              <span>Total</span>
+
+              <strong>
+                <Price valor={total} />
+              </strong>
+            </div>
+
+            <div className="checkout-seguridad">
+              🔒 Compra segura y protegida
+            </div>
+
+            <button
+              type="button"
+              className="checkout-boton-pagar checkout-boton-escritorio"
+              onClick={pagar}
+            >
+              Finalizar compra
             </button>
 
-          </form>
-        </div>
+          </div>
 
-        <div className="col-md-5">
-          <h3>Resumen de compra</h3>
-
-          {items.map((item) => (
-            <p key={item.id}>
-              {item.nombre} x {item.cantidad}
-            </p>
-          ))}
-
-          <h4>
-            Total: <Price valor={total} />
-          </h4>
         </div>
 
       </div>
+
     </section>
   );
 }

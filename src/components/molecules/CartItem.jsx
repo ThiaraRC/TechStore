@@ -10,12 +10,12 @@ export default function CartItem({
   const subtotal = item.precio * item.cantidad;
 
   return (
-    <tr>
-      <td>
+    <tr className="carrito-fila">
+      <td className="carrito-imagen-celda">
         <img
           src={item.imagen}
           alt={item.nombre}
-          style={{ width: 70 }}
+          className="carrito-imagen"
         />
       </td>
 
@@ -40,6 +40,7 @@ export default function CartItem({
       <td>
         <button
           type="button"
+          className="boton-eliminar-carrito"
           onClick={() => onEliminar(item.id)}
         >
           Eliminar

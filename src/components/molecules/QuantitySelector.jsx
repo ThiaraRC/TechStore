@@ -4,23 +4,21 @@ export default function QuantitySelector({
   onDisminuir
 }) {
   return (
-    <div className="input-group input-group-sm" style={{ width: 120 }}>
+    <div className="selector-cantidad">
       <button
         type="button"
-        className="btn btn-outline-secondary"
         onClick={onDisminuir}
+        aria-label="Disminuir cantidad"
       >
         -
       </button>
 
-      <span className="form-control text-center">
-        {cantidad}
-      </span>
+      <span>{cantidad}</span>
 
       <button
         type="button"
-        className="btn btn-outline-secondary"
         onClick={onAumentar}
+        aria-label="Aumentar cantidad"
       >
         +
       </button>

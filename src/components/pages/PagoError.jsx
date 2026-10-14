@@ -2,22 +2,58 @@ import { Link } from 'react-router-dom';
 
 export default function PagoError() {
   return (
-    <section>
-      <h2>No fue posible realizar el pago</h2>
+    <section className="pago-error-contenedor">
 
-      <p>
-        Revisa los datos ingresados e inténtalo nuevamente.
-      </p>
+      <div className="pago-error-tarjeta">
 
-      <div className="d-flex gap-2 flex-wrap">
-        <Link to="/checkout">
-          Volver a realizar el pago
-        </Link>
+        <span className="pago-error-etiqueta">
+          PAGO NO COMPLETADO
+        </span>
 
-        <Link to="/carrito">
-          Volver al carrito
-        </Link>
+        <h2>
+          No fue posible realizar el pago
+        </h2>
+
+        <p className="pago-error-texto">
+          Revisa los datos ingresados e inténtalo nuevamente.
+          Tu carrito se mantiene disponible para que puedas
+          continuar con la compra.
+        </p>
+
+        <div className="pago-error-aviso">
+          <span>🔒</span>
+
+          <div>
+            <strong>
+              Tu compra no fue procesada
+            </strong>
+
+            <p>
+              No se realizó ningún cobro.
+            </p>
+          </div>
+        </div>
+
+        <div className="pago-error-acciones">
+
+          <Link
+            to="/checkout"
+            className="pago-error-boton-principal"
+          >
+            Intentar nuevamente
+          </Link>
+
+          <Link
+            to="/carrito"
+            className="pago-error-boton-secundario"
+          >
+            Volver al carrito
+          </Link>
+
+        </div>
+
       </div>
+
     </section>
   );
 }

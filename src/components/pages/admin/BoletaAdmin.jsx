@@ -8,7 +8,7 @@ export default function BoletaAdmin() {
 
   if (!orden) {
     return (
-      <section>
+      <section className="boleta-admin">
         <h2>Boleta</h2>
         <p>No se encontró la orden.</p>
 
@@ -20,7 +20,7 @@ export default function BoletaAdmin() {
   }
 
   return (
-    <section>
+    <section className="boleta-admin">
       <h2>Boleta de orden N° {orden.id}</h2>
 
       <p>
@@ -80,11 +80,6 @@ export default function BoletaAdmin() {
                   <img
                     src={item.imagen}
                     alt={item.nombre}
-                    style={{
-                      width: 60,
-                      height: 60,
-                      objectFit: 'contain'
-                    }}
                   />
                 </td>
 
@@ -107,11 +102,13 @@ export default function BoletaAdmin() {
         </table>
       </div>
 
-      <h3>
-        Total: <Price valor={orden.total} />
-      </h3>
+      <div className="total-boleta">
+        <h3>
+          Total: <Price valor={orden.total} />
+        </h3>
+      </div>
 
-      <div className="d-flex gap-2 flex-wrap">
+      <div className="acciones-boleta">
         <button
           type="button"
           onClick={() => window.print()}
