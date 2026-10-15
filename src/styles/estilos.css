@@ -4193,7 +4193,7 @@ main:has(.home-definitivo) {
     padding: 0 !important;
 
     object-fit: cover !important;
-    object-position: 54% 42% !important;
+    object-position: center center !important;
 
     border: 0 !important;
     border-radius: 0 !important;
@@ -4211,13 +4211,10 @@ main:has(.home-definitivo) {
     background:
         linear-gradient(
             90deg,
-            rgba(7, 12, 40, 0.99) 0%,
-            rgba(8, 13, 42, 0.97) 20%,
-            rgba(10, 14, 46, 0.88) 28%,
-            rgba(14, 15, 54, 0.60) 34%,
-            rgba(18, 16, 63, 0.28) 40%,
-            rgba(20, 17, 67, 0.08) 46%,
-            rgba(20, 17, 67, 0) 52%
+            rgba(7, 12, 40, 0.55) 0%,
+            rgba(7, 12, 40, 0.30) 25%,
+            rgba(7, 12, 40, 0.08) 40%,
+            rgba(7, 12, 40, 0) 52%
         );
 
     pointer-events: none;
@@ -4235,7 +4232,7 @@ main:has(.home-definitivo) {
     align-items: flex-start;
     justify-content: center;
 
-    padding: 28px 8px 28px 48px;
+    padding: 28px 12px 28px 52px;
 
     background: transparent;
 }
@@ -4489,7 +4486,7 @@ main:has(.home-definitivo) {
 .home-definitivo-productos-caja article img,
 .home-definitivo-productos-caja .card img {
     width: 100% !important;
-    height: 128px !important;
+    height: 112px !important;
 
     display: block;
 
@@ -4814,4 +4811,643 @@ main:has(.home-definitivo) {
 
         gap: 8px;
     }
+}
+
+/* =========================================================
+   AJUSTE FINAL HOME - PRODUCTOS + HISTORIA
+   Solo afecta desde Productos destacados hacia abajo.
+   ========================================================= */
+
+.home-definitivo-productos-caja .row {
+  align-items: stretch;
+}
+
+.home-definitivo-productos-caja .row > div {
+  display: flex;
+}
+
+.home-definitivo-productos-caja article {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  height: 100% !important;
+  padding: 10px !important;
+}
+
+.home-definitivo-productos-caja article > img {
+  height: 102px !important;
+  margin-bottom: 10px !important;
+}
+
+.home-definitivo-productos-caja article > h3 {
+  min-height: 38px;
+  margin: 0 0 6px !important;
+  font-size: 15px !important;
+  line-height: 1.18 !important;
+}
+
+.home-definitivo-productos-caja article > p:first-of-type {
+  min-height: 42px;
+  margin: 0 0 8px !important;
+  font-size: 11.5px !important;
+  line-height: 1.45 !important;
+}
+
+.home-definitivo-productos-caja article > p:nth-of-type(2) {
+  min-height: 24px;
+  margin: 0 0 8px !important;
+}
+
+.home-definitivo-productos-caja article > a {
+  margin-top: auto !important;
+  margin-bottom: 10px !important;
+}
+
+.home-definitivo-productos-caja article > button {
+  width: 100% !important;
+  min-height: 42px !important;
+  margin: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+/* Conoce Tech Store */
+.home-definitivo-historia {
+  width: min(1240px, calc(100% - 56px)) !important;
+  grid-template-columns: 38% 62% !important;
+  min-height: 225px !important;
+}
+
+.home-definitivo-historia-texto {
+  padding: 18px 24px !important;
+}
+
+.home-definitivo-video {
+  min-height: 225px !important;
+  padding: 9px 10px 9px 0 !important;
+}
+
+.home-definitivo-video video {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 225px !important;
+  object-fit: cover !important;
+}
+
+@media (max-width: 900px) {
+  .home-definitivo-historia {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-definitivo-video {
+    padding: 0 18px 18px !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .home-definitivo-historia {
+    width: calc(100% - 24px) !important;
+  }
+
+  .home-definitivo-productos-caja article > h3,
+  .home-definitivo-productos-caja article > p:first-of-type {
+    min-height: 0;
+  }
+}
+/* =========================================================
+   HOME FINAL - PRODUCTOS COMO MOCKUP
+   NO TOCA EL HERO
+   ========================================================= */
+
+/* Caja exterior */
+.home-definitivo-productos-caja {
+  padding: 10px 12px !important;
+}
+
+/* Las 4 columnas tienen la misma altura */
+.home-definitivo-productos-caja .row {
+  align-items: stretch !important;
+}
+
+.home-definitivo-productos-caja .row > div {
+  display: flex !important;
+}
+
+/* ProductCard real: article directo */
+.home-definitivo-productos-caja article {
+  width: 100% !important;
+  height: 100% !important;
+
+  display: grid !important;
+
+  grid-template-rows:
+    120px
+    34px
+    44px
+    26px
+    24px
+    40px !important;
+
+  gap: 4px !important;
+
+  padding: 8px !important;
+
+  border: 1px solid #ebe6f7 !important;
+  border-radius: 14px !important;
+
+  background: #ffffff !important;
+
+  box-shadow: 0 4px 12px rgba(37, 20, 75, 0.06) !important;
+
+  overflow: hidden !important;
+}
+
+/* Imagen un poco más grande */
+.home-definitivo-productos-caja article > img {
+  width: 100% !important;
+  height: 120px !important;
+
+  margin: 0 !important;
+  padding: 6px !important;
+
+  object-fit: contain !important;
+
+  border-radius: 10px !important;
+
+  background: linear-gradient(145deg, #faf7ff, #f2eaff) !important;
+}
+
+/* Nombre del producto */
+.home-definitivo-productos-caja article > h3 {
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: flex-start !important;
+
+  color: #172554 !important;
+
+  font-size: 15px !important;
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+}
+
+/* Descripción */
+.home-definitivo-productos-caja article > p:first-of-type {
+  margin: 0 !important;
+
+  color: #64748b !important;
+
+  font-size: 12px !important;
+  line-height: 1.4 !important;
+}
+
+/* Precio */
+.home-definitivo-productos-caja article > p:nth-of-type(2) {
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  color: #64748b !important;
+
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+/* Ver detalle */
+.home-definitivo-productos-caja article > a {
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+
+  color: #7c3aed !important;
+
+  font-size: 12px !important;
+  font-weight: 600 !important;
+}
+
+/* Botones todos a la misma altura */
+.home-definitivo-productos-caja article > button {
+  width: 100% !important;
+  height: 40px !important;
+
+  margin: 0 !important;
+  padding: 0 8px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: 0 !important;
+  border-radius: 8px !important;
+
+  background: linear-gradient(90deg, #7c3aed, #8b3dff) !important;
+
+  color: #ffffff !important;
+
+  font-size: 11px !important;
+  font-weight: 900 !important;
+}
+
+/* =========================================================
+   CONOCE TECH STORE
+   MISMO ANCHO Y VIDEO MÁS LARGO
+   ========================================================= */
+
+.home-definitivo-historia {
+  grid-template-columns: 34% 66% !important;
+
+  min-height: 215px !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.home-definitivo-historia-texto {
+  padding: 18px 22px !important;
+}
+
+.home-definitivo-video {
+  min-height: 215px !important;
+
+  padding: 8px 10px 8px 0 !important;
+}
+
+.home-definitivo-video video {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 215px !important;
+
+  object-fit: cover !important;
+
+  border-radius: 13px !important;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+
+  .home-definitivo-historia {
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-definitivo-video {
+    padding: 0 18px 18px !important;
+  }
+
+}
+/* =========================================================
+   HOME - PRODUCTOS MÁS COMPACTOS COMO MOCKUP
+   ========================================================= */
+
+.home-definitivo-productos-caja article {
+  display: grid !important;
+
+  grid-template-columns: 0.8fr 1.55fr !important;
+
+  grid-template-rows:
+    130px
+    34px
+    40px
+    25px
+    40px !important;
+
+  column-gap: 8px !important;
+  row-gap: 3px !important;
+
+  padding: 8px !important;
+}
+
+/* IMAGEN MÁS GRANDE */
+.home-definitivo-productos-caja article > img {
+  grid-column: 1 / -1 !important;
+  grid-row: 1 !important;
+
+  width: 100% !important;
+  height: 130px !important;
+
+  padding: 4px !important;
+  margin: 0 !important;
+
+  object-fit: contain !important;
+}
+
+/* TÍTULO */
+.home-definitivo-productos-caja article > h3 {
+  grid-column: 1 / -1 !important;
+  grid-row: 2 !important;
+
+  margin: 0 !important;
+
+  font-size: 14px !important;
+  line-height: 1.15 !important;
+}
+
+/* DESCRIPCIÓN */
+.home-definitivo-productos-caja article > p:first-of-type {
+  grid-column: 1 / -1 !important;
+  grid-row: 3 !important;
+
+  margin: 0 !important;
+
+  font-size: 11px !important;
+  line-height: 1.3 !important;
+}
+
+/* PRECIO */
+.home-definitivo-productos-caja article > p:nth-of-type(2) {
+  grid-column: 1 / -1 !important;
+  grid-row: 4 !important;
+
+  margin: 0 !important;
+
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+
+/* VER DETALLE */
+.home-definitivo-productos-caja article > a {
+  grid-column: 1 !important;
+  grid-row: 5 !important;
+
+  margin: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+
+  font-size: 11px !important;
+  white-space: nowrap !important;
+}
+
+/* AGREGAR AL CARRITO AL LADO */
+.home-definitivo-productos-caja article > button {
+  grid-column: 2 !important;
+  grid-row: 5 !important;
+
+  width: 100% !important;
+  height: 40px !important;
+
+  margin: 0 !important;
+  padding: 0 7px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  font-size: 10.5px !important;
+  white-space: nowrap !important;
+}
+/* AJUSTE FINO PRODUCTOS - IGUALAR MOCKUP */
+
+/* Imagen un poco más grande */
+.home-definitivo-productos-caja article {
+  grid-template-rows:
+    142px
+    30px
+    36px
+    23px
+    40px !important;
+
+  row-gap: 2px !important;
+}
+
+.home-definitivo-productos-caja article > img {
+  height: 142px !important;
+  padding: 2px !important;
+}
+
+/* Textos más juntos */
+.home-definitivo-productos-caja article > h3 {
+  font-size: 14px !important;
+  line-height: 1.1 !important;
+}
+
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 11px !important;
+  line-height: 1.2 !important;
+}
+
+.home-definitivo-productos-caja article > p:nth-of-type(2) {
+  font-size: 11px !important;
+  line-height: 1.1 !important;
+}
+
+/* Ver detalle un poco más visible */
+.home-definitivo-productos-caja article > a {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+/* Mantener el botón compacto */
+.home-definitivo-productos-caja article > button {
+  height: 38px !important;
+  font-size: 10.5px !important;
+}
+
+/* AJUSTE FINO - TEXTO Y PRECIO PRODUCTOS */
+
+/* Título un poco más grande */
+.home-definitivo-productos-caja article > h3 {
+  font-size: 15px !important;
+  line-height: 1.15 !important;
+}
+
+/* Descripción un poco más grande para ocupar mejor el espacio */
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 12px !important;
+  line-height: 1.3 !important;
+}
+
+/* Línea de precio */
+.home-definitivo-productos-caja article > p:nth-of-type(2) {
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+/* Precio destacado en morado */
+.home-definitivo-productos-caja article .precio,
+.home-definitivo-productos-caja article strong,
+.home-definitivo-productos-caja article .text-primary {
+  color: #7c3aed !important;
+  font-weight: 900 !important;
+}
+
+/* Ver detalle un poco más grande */
+.home-definitivo-productos-caja article > a {
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+/* PRECIO PRODUCTOS HOME */
+
+.home-definitivo-productos-caja .precio-producto {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+
+  margin: 0 !important;
+
+  font-size: 12px !important;
+  line-height: 1.2 !important;
+}
+
+.home-definitivo-productos-caja .precio-etiqueta {
+  color: #64748b !important;
+  font-weight: 400 !important;
+}
+
+.home-definitivo-productos-caja .precio-original {
+  color: #64748b !important;
+  font-weight: 400 !important;
+}
+
+.home-definitivo-productos-caja .precio-actual {
+  color: #7c3aed !important;
+  font-weight: 900 !important;
+}
+
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 13px !important;
+  line-height: 1.3 !important;
+}
+
+/* BOTÓN CARRITO HOME - ÍCONO BLANCO */
+
+.home-carrito-boton-contenido {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 7px !important;
+
+  color: #ffffff !important;
+}
+
+.home-carrito-boton-contenido svg {
+  width: 17px !important;
+  height: 17px !important;
+
+  flex-shrink: 0 !important;
+
+  color: #ffffff !important;
+}
+
+.home-carrito-boton-contenido span {
+  color: #ffffff !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+}
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 14px !important;
+  line-height: 1.28 !important;
+  max-width: 95% !important;
+}
+
+.home-carrito-boton-contenido {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  color: #ffffff !important;
+}
+
+.home-carrito-boton-contenido svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: #ffffff !important;
+  stroke: #ffffff !important;
+  flex-shrink: 0 !important;
+}
+
+.home-carrito-boton-contenido span {
+  color: #ffffff !important;
+  font-size: 11.5px !important;
+  font-weight: 800 !important;
+}
+/* DESCRIPCIÓN PRODUCTOS MÁS GRANDE */
+
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 14.5px !important;
+  line-height: 1.3 !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
+/* =====================================================
+   AJUSTE FINAL - CONOCE TECH STORE
+   mismo ancho que productos + video más horizontal
+   ===================================================== */
+
+.home-definitivo-historia {
+  width: calc(100% - 80px) !important;
+  max-width: 1220px !important;
+  margin: 16px auto 24px !important;
+
+  grid-template-columns: 36% 64% !important;
+
+  min-height: 0 !important;
+  height: 300px !important;
+
+  box-sizing: border-box !important;
+}
+
+/* Texto */
+.home-definitivo-historia-texto {
+  padding: 24px 22px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+/* Zona del video */
+.home-definitivo-video {
+  width: 100% !important;
+  height: 300px !important;
+  min-height: 0 !important;
+
+  padding: 8px 10px 8px 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Video más largo horizontalmente */
+.home-definitivo-video video {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+
+  object-fit: cover !important;
+  border-radius: 14px !important;
+}
+
+/* Tablet / celular */
+@media (max-width: 900px) {
+  .home-definitivo-historia {
+    width: calc(100% - 32px) !important;
+    height: auto !important;
+    grid-template-columns: 1fr !important;
+  }
+
+  .home-definitivo-video {
+    height: 260px !important;
+    padding: 0 16px 16px !important;
+  }
+}
+
+/* MISMO ANCHO PARA CONOCE TECH STORE QUE PRODUCTOS */
+
+.home-definitivo-historia {
+  width: min(1240px, calc(100% - 56px)) !important;
+  max-width: 1240px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+
+  grid-template-columns: 34% 66% !important;
+}
+
+.home-definitivo-video {
+  width: 100% !important;
+}
+.home-definitivo-productos-caja article > p:first-of-type {
+  font-size: 13px !important;
+  line-height: 1.3 !important;
 }

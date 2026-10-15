@@ -38,7 +38,7 @@ export default function Home() {
 
         <div className="home-definitivo-hero-imagen">
           <img
-            src="/img/inicio-tech.jpeg"
+            src="/img/inicio-tech-horizontal.jpg"
             alt="Tecnología Tech Store"
           />
 
