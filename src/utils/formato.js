@@ -1,0 +1,1 @@
+export const formatearPrecio = (n) => '$' + new Intl.NumberFormat('es-CL').format(n)
