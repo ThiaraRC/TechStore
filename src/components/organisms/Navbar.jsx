@@ -18,7 +18,6 @@ export default function Navbar({
 
       <div className="navbar-marca">
         <Logo />
-
         <h1>Tech Store</h1>
       </div>
 
@@ -69,9 +68,27 @@ export default function Navbar({
 
         {usuario ? (
           <>
-            <span className="saludo-sesion">
-              Hola, {usuario.nombre}
-            </span>
+            {usuario.tipoUsuario === 'administrador' ? (
+              <Link
+                to="/admin"
+                className="saludo-sesion"
+                onClick={cerrarMenu}
+              >
+                Hola, {usuario.nombre}
+              </Link>
+            ) : usuario.tipoUsuario === 'vendedor' ? (
+              <Link
+                to="/admin/productos"
+                className="saludo-sesion"
+                onClick={cerrarMenu}
+              >
+                Hola, {usuario.nombre}
+              </Link>
+            ) : (
+              <span className="saludo-sesion">
+                Hola, {usuario.nombre}
+              </span>
+            )}
 
             <a
               href="/"

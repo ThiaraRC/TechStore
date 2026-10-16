@@ -1,7 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './components/templates/MainLayout'
 import AdminLayout from './components/templates/AdminLayout'
-import { CarritoProvider } from './context/CarritoContext'
 
 import Home from './components/pages/Home'
 import Productos from './components/pages/Productos'
@@ -32,41 +31,47 @@ import ProtegerAdmin from './components/guards/ProtegerAdmin'
 
 export default function App() {
   return (
-    <CarritoProvider>
-      <Routes>
+    <Routes>
 
-        {/* RUTAS DE LA TIENDA */}
-        <Route element={<MainLayout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/productos" element={<Productos />} />
-          <Route path="/productos/:id" element={<DetalleProducto />} />
-          <Route path="/categorias" element={<Categorias />} />
-          <Route path="/ofertas" element={<Ofertas />} />
-          <Route path="/nosotros" element={<Nosotros />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogDetalle />} />
-          <Route path="/contacto" element={<Contacto />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<Registro />} />
-          <Route path="/carrito" element={<Carrito />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/compra-exitosa/:id" element={<CompraExitosa />} />
-          <Route path="/pago-error" element={<PagoError />} />
-        </Route>
+      {/* RUTAS DE LA TIENDA */}
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/productos" element={<Productos />} />
+        <Route path="/productos/:id" element={<DetalleProducto />} />
+        <Route path="/categorias" element={<Categorias />} />
+        <Route path="/ofertas" element={<Ofertas />} />
+        <Route path="/nosotros" element={<Nosotros />} />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetalle />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registro" element={<Registro />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/compra-exitosa/:id" element={<CompraExitosa />} />
+        <Route path="/pago-error" element={<PagoError />} />
+      </Route>
 
-        <Route path="/admin" element={<ProtegerAdmin><AdminLayout /></ProtegerAdmin>}>
-          <Route index element={<Dashboard />} />
-          <Route path="ordenes" element={<OrdenesAdmin />} />
-          <Route path="ordenes/:id" element={<BoletaAdmin />} />
-          <Route path="productos" element={<ProductosAdmin />} />
-          <Route path="productos/nuevo" element={<NuevoProducto />} />
-          <Route path="productos/:id/editar" element={<EditarProducto />} />
-          <Route path="usuarios" element={<UsuariosAdmin />} />
-          <Route path="usuarios/nuevo" element={<NuevoUsuario />} />
-          <Route path="usuarios/:run/editar" element={<EditarUsuario />} />
-        </Route>
+      {/* RUTAS DE ADMINISTRACIÓN */}
+      <Route
+        path="/admin"
+        element={
+          <ProtegerAdmin>
+            <AdminLayout />
+          </ProtegerAdmin>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="ordenes" element={<OrdenesAdmin />} />
+        <Route path="ordenes/:id" element={<BoletaAdmin />} />
+        <Route path="productos" element={<ProductosAdmin />} />
+        <Route path="productos/nuevo" element={<NuevoProducto />} />
+        <Route path="productos/:id/editar" element={<EditarProducto />} />
+        <Route path="usuarios" element={<UsuariosAdmin />} />
+        <Route path="usuarios/nuevo" element={<NuevoUsuario />} />
+        <Route path="usuarios/:run/editar" element={<EditarUsuario />} />
+      </Route>
 
-      </Routes>
-    </CarritoProvider>
+    </Routes>
   )
 }
