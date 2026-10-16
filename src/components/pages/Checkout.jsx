@@ -1,15 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useCarrito } from '../../context/CarritoContext';
-import { useAuth } from '../../context/AuthContext';
-import { crearOrden } from '../../data/ordenes';
-import { regionesComunas, comunasPorRegion } from '../../data/regiones';
-import Price from '../atoms/Price';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useCarrito } from '../../context/CarritoContext'
+import { useAuth } from '../../context/AuthContext'
+import { crearOrden } from '../../data/ordenes'
+import { regionesComunas, comunasPorRegion } from '../../data/regiones'
+import Price from '../atoms/Price'
 
 export default function Checkout() {
-  const navigate = useNavigate();
-  const { items, total, vaciar } = useCarrito();
-  const { usuario } = useAuth();
+  const navigate = useNavigate()
+  const { items, total, vaciar } = useCarrito()
+  const { usuario } = useAuth()
 
   const [form, setForm] = useState({
     nombre: usuario?.nombre || '',
@@ -20,55 +20,75 @@ export default function Checkout() {
     region: '',
     comuna: '',
     indicaciones: ''
-  });
+  })
 
-  const [errores, setErrores] = useState({});
+  const [errores, setErrores] = useState({})
 
-  const comunasDisponibles = comunasPorRegion(form.region);
+  const comunasDisponibles = comunasPorRegion(form.region)
 
   const cambiar = (e) => {
-    const { name, value } = e.target;
+    const { name, value } = e.target
 
     setForm((anterior) => ({
       ...anterior,
       [name]: value,
       ...(name === 'region' ? { comuna: '' } : {})
-    }));
+    }))
 
     setErrores((anterior) => ({
       ...anterior,
       [name]: ''
-    }));
-  };
+    }))
+  }
 
   const validar = () => {
-    const nuevosErrores = {};
+    const nuevosErrores = {}
 
-    if (!form.nombre.trim()) nuevosErrores.nombre = 'Ingresa tu nombre.';
-    if (!form.apellidos.trim()) nuevosErrores.apellidos = 'Ingresa tus apellidos.';
-
-    if (!form.correo.trim()) {
-      nuevosErrores.correo = 'Ingresa tu correo.';
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.correo)) {
-      nuevosErrores.correo = 'Ingresa un correo válido.';
+    if (!form.nombre.trim()) {
+      nuevosErrores.nombre = 'Ingresa tu nombre.'
     }
 
-    if (!form.calle.trim()) nuevosErrores.calle = 'Ingresa tu dirección.';
-    if (!form.region) nuevosErrores.region = 'Selecciona una región.';
-    if (!form.comuna) nuevosErrores.comuna = 'Selecciona una comuna.';
+    if (!form.apellidos.trim()) {
+      nuevosErrores.apellidos = 'Ingresa tus apellidos.'
+    }
 
-    setErrores(nuevosErrores);
-    return Object.keys(nuevosErrores).length === 0;
-  };
+    if (!form.correo.trim()) {
+      nuevosErrores.correo = 'Ingresa tu correo electrónico.'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.correo)) {
+      nuevosErrores.correo = 'Ingresa un correo electrónico válido.'
+    }
+
+    if (!form.calle.trim()) {
+      nuevosErrores.calle = 'Ingresa tu dirección.'
+    }
+
+    if (!form.region) {
+      nuevosErrores.region = 'Selecciona una región.'
+    }
+
+    if (!form.comuna) {
+      nuevosErrores.comuna = 'Selecciona una comuna.'
+    }
+
+    setErrores(nuevosErrores)
+
+    return Object.keys(nuevosErrores).length === 0
+  }
 
   const pagar = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    if (!validar() || total <= 0) {
-      if (total <= 0) {
-        navigate('/pago-error');
-      }
-      return;
+    const formularioValido = validar()
+
+    // Primero mostramos los errores del formulario
+    if (!formularioValido) {
+      return
+    }
+
+    // Si el formulario está correcto, revisamos el carrito
+    if (total <= 0) {
+      navigate('/pago-error')
+      return
     }
 
     const nuevaOrden = crearOrden({
@@ -88,18 +108,21 @@ export default function Checkout() {
 
       items,
       total
-    });
+    })
 
-    vaciar();
-    navigate(`/compra-exitosa/${nuevaOrden.id}`);
-  };
+    vaciar()
+
+    navigate(`/compra-exitosa/${nuevaOrden.id}`)
+  }
 
   return (
     <section className="checkout-contenedor">
 
       <div className="checkout-encabezado">
         <span>COMPRA SEGURA</span>
+
         <h2>Finalizar compra</h2>
+
         <p>
           Completa tus datos de entrega y revisa tu pedido antes de continuar.
         </p>
@@ -119,11 +142,18 @@ export default function Checkout() {
               </div>
             </div>
 
-            <form className="checkout-formulario" onSubmit={pagar}>
+            <form
+              className="checkout-formulario"
+              onSubmit={pagar}
+              noValidate
+            >
               <div className="row g-3">
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="nombre">Nombre</label>
+                  <label htmlFor="nombre">
+                    Nombre
+                  </label>
+
                   <input
                     id="nombre"
                     name="nombre"
@@ -132,11 +162,19 @@ export default function Checkout() {
                     placeholder="Tu nombre"
                     className={errores.nombre ? 'is-invalid' : ''}
                   />
-                  {errores.nombre && <div className="invalid-feedback d-block">{errores.nombre}</div>}
+
+                  {errores.nombre && (
+                    <div className="checkout-error">
+                      {errores.nombre}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="apellidos">Apellidos</label>
+                  <label htmlFor="apellidos">
+                    Apellidos
+                  </label>
+
                   <input
                     id="apellidos"
                     name="apellidos"
@@ -145,11 +183,19 @@ export default function Checkout() {
                     placeholder="Tus apellidos"
                     className={errores.apellidos ? 'is-invalid' : ''}
                   />
-                  {errores.apellidos && <div className="invalid-feedback d-block">{errores.apellidos}</div>}
+
+                  {errores.apellidos && (
+                    <div className="checkout-error">
+                      {errores.apellidos}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="correo">Correo electrónico</label>
+                  <label htmlFor="correo">
+                    Correo electrónico
+                  </label>
+
                   <input
                     id="correo"
                     name="correo"
@@ -159,11 +205,19 @@ export default function Checkout() {
                     placeholder="correo@ejemplo.cl"
                     className={errores.correo ? 'is-invalid' : ''}
                   />
-                  {errores.correo && <div className="invalid-feedback d-block">{errores.correo}</div>}
+
+                  {errores.correo && (
+                    <div className="checkout-error">
+                      {errores.correo}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="calle">Calle</label>
+                  <label htmlFor="calle">
+                    Calle
+                  </label>
+
                   <input
                     id="calle"
                     name="calle"
@@ -172,11 +226,19 @@ export default function Checkout() {
                     placeholder="Nombre de calle y número"
                     className={errores.calle ? 'is-invalid' : ''}
                   />
-                  {errores.calle && <div className="invalid-feedback d-block">{errores.calle}</div>}
+
+                  {errores.calle && (
+                    <div className="checkout-error">
+                      {errores.calle}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="departamento">Departamento</label>
+                  <label htmlFor="departamento">
+                    Departamento
+                  </label>
+
                   <input
                     id="departamento"
                     name="departamento"
@@ -187,7 +249,10 @@ export default function Checkout() {
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="region">Región</label>
+                  <label htmlFor="region">
+                    Región
+                  </label>
+
                   <select
                     id="region"
                     name="region"
@@ -195,19 +260,32 @@ export default function Checkout() {
                     onChange={cambiar}
                     className={errores.region ? 'is-invalid' : ''}
                   >
-                    <option value="">Seleccione una región</option>
+                    <option value="">
+                      Seleccione una región
+                    </option>
 
                     {regionesComunas.map((item) => (
-                      <option key={item.region} value={item.region}>
+                      <option
+                        key={item.region}
+                        value={item.region}
+                      >
                         {item.region}
                       </option>
                     ))}
                   </select>
-                  {errores.region && <div className="invalid-feedback d-block">{errores.region}</div>}
+
+                  {errores.region && (
+                    <div className="checkout-error">
+                      {errores.region}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12 col-md-6">
-                  <label htmlFor="comuna">Comuna</label>
+                  <label htmlFor="comuna">
+                    Comuna
+                  </label>
+
                   <select
                     id="comuna"
                     name="comuna"
@@ -217,20 +295,33 @@ export default function Checkout() {
                     className={errores.comuna ? 'is-invalid' : ''}
                   >
                     <option value="">
-                      {form.region ? 'Seleccione una comuna' : 'Primero seleccione una región'}
+                      {form.region
+                        ? 'Seleccione una comuna'
+                        : 'Primero seleccione una región'}
                     </option>
 
                     {comunasDisponibles.map((comuna) => (
-                      <option key={comuna} value={comuna}>
+                      <option
+                        key={comuna}
+                        value={comuna}
+                      >
                         {comuna}
                       </option>
                     ))}
                   </select>
-                  {errores.comuna && <div className="invalid-feedback d-block">{errores.comuna}</div>}
+
+                  {errores.comuna && (
+                    <div className="checkout-error">
+                      {errores.comuna}
+                    </div>
+                  )}
                 </div>
 
                 <div className="col-12">
-                  <label htmlFor="indicaciones">Indicaciones de entrega</label>
+                  <label htmlFor="indicaciones">
+                    Indicaciones de entrega
+                  </label>
+
                   <textarea
                     id="indicaciones"
                     name="indicaciones"
@@ -259,18 +350,31 @@ export default function Checkout() {
 
             <div className="checkout-resumen-titulo">
               <span>🛒</span>
-              <h3>Resumen de compra</h3>
+
+              <h3>
+                Resumen de compra
+              </h3>
             </div>
 
             <div className="checkout-productos">
               {items.map((item) => (
-                <div className="checkout-producto" key={item.id}>
+                <div
+                  className="checkout-producto"
+                  key={item.id}
+                >
                   <div>
-                    <strong>{item.nombre}</strong>
-                    <span>Cantidad: {item.cantidad}</span>
+                    <strong>
+                      {item.nombre}
+                    </strong>
+
+                    <span>
+                      Cantidad: {item.cantidad}
+                    </span>
                   </div>
 
-                  <Price valor={item.precio * item.cantidad} />
+                  <Price
+                    valor={item.precio * item.cantidad}
+                  />
                 </div>
               ))}
             </div>
@@ -278,8 +382,13 @@ export default function Checkout() {
             <div className="checkout-linea" />
 
             <div className="checkout-total">
-              <span>Total</span>
-              <strong><Price valor={total} /></strong>
+              <span>
+                Total
+              </span>
+
+              <strong>
+                <Price valor={total} />
+              </strong>
             </div>
 
             <div className="checkout-seguridad">
@@ -300,5 +409,5 @@ export default function Checkout() {
       </div>
 
     </section>
-  );
+  )
 }

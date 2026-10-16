@@ -1,30 +1,36 @@
-import { act } from 'react';
-import { montar, boton } from '../../test/montar';
-import QuantitySelector from './QuantitySelector';
+import { act } from 'react'
+import { montar, boton } from '../../test/montar'
+import QuantitySelector from './QuantitySelector'
 
 describe('QuantitySelector', () => {
-  let vista;
+  let vista
 
   afterEach(() => {
-    vista.desmontar();
-  });
+    vista.desmontar()
+  })
 
-  it('8. el botón + llama a onAumentar y muestra la cantidad', () => {
-    const onAumentar = jasmine.createSpy('onAumentar');
+  it('8. los botones + y - llaman a sus funciones y muestran la cantidad', () => {
+    const onAumentar = jasmine.createSpy('onAumentar')
+    const onDisminuir = jasmine.createSpy('onDisminuir')
 
     vista = montar(
       <QuantitySelector
         cantidad={2}
         onAumentar={onAumentar}
-        onDisminuir={() => {}}
+        onDisminuir={onDisminuir}
       />
-    );
+    )
 
     act(() => {
-      boton(vista.contenedor, '+').click();
-    });
+      boton(vista.contenedor, '+').click()
+    })
 
-    expect(onAumentar).toHaveBeenCalledTimes(1);
-    expect(vista.contenedor.textContent).toContain('2');
-  });
-});
+    act(() => {
+      boton(vista.contenedor, '-').click()
+    })
+
+    expect(onAumentar).toHaveBeenCalledTimes(1)
+    expect(onDisminuir).toHaveBeenCalledTimes(1)
+    expect(vista.contenedor.textContent).toContain('2')
+  })
+})
