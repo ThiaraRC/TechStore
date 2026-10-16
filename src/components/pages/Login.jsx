@@ -71,7 +71,7 @@ export default function Login() {
 
   // Dirigir según el rol
   if (tipoUsuario === 'administrador') {
-    navigate('/admin/usuarios')
+    navigate('/admin')
   } else if (tipoUsuario === 'vendedor') {
     navigate('/admin/productos')
   } else {

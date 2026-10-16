@@ -19,6 +19,10 @@ export default function AdminLayout() {
           <Link to="/admin/ordenes">Órdenes</Link>
           <Link to="/admin/productos">Productos</Link>
           {usuario?.tipoUsuario === 'administrador' && <Link to="/admin/usuarios">Usuarios</Link>}
+          <span className="saludo-sesion">
+            Hola, {usuario?.nombre}
+          </span>
+
           <Link to="/">Volver a la tienda</Link>
         </nav>
       </header>
