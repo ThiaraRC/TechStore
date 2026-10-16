@@ -22,6 +22,7 @@ module.exports = function (config) {
               },
             },
           },
+          { test: /\.m?js$/, resolve: { fullySpecified: false } },
           { test: /\.css$/, use: ['style-loader', 'css-loader'] },
           { test: /\.(png|jpe?g|svg|mp4)$/, type: 'asset/resource' },
         ],
