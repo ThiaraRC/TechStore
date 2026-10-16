@@ -147,9 +147,10 @@ export function validarLogin(datos) {
 }
 
   if (!datos.password) {
-    errores.password = 'Debes ingresar tu contraseña.'
-  }
-
+  errores.password = 'Debes ingresar tu contraseña.'
+} else if (datos.password.length < 4 || datos.password.length > 10) {
+  errores.password = 'La contraseña debe tener entre 4 y 10 caracteres.'
+}
 console.log('Errores del registro:', errores)
 return errores
 }

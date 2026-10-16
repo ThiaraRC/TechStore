@@ -1,4 +1,4 @@
-import { leer, guardar } from './almacen'
+import { leer, guardar } from './almacen.js'
 
 const CLAVE = 'tech_usuarios'
 
@@ -34,21 +34,36 @@ export function listarUsuarios() {
 export function inicializarUsuarios() {
   const usuarios = listarUsuarios()
 
-  if (usuarios.length === 0) {
-    guardar(CLAVE, usuariosIniciales)
+  const usuariosFaltantes = usuariosIniciales.filter(
+    (usuarioInicial) =>
+      !usuarios.some(
+        (usuario) =>
+          usuario.correo.toLowerCase() ===
+          usuarioInicial.correo.toLowerCase()
+      )
+  )
+
+  if (usuariosFaltantes.length > 0) {
+    guardar(CLAVE, [...usuarios, ...usuariosFaltantes])
   }
 }
 
 export function buscarUsuarioPorCorreo(correo) {
+  inicializarUsuarios()
+
+  const correoBuscado = correo.trim().toLowerCase()
   const usuarios = listarUsuarios()
 
   return usuarios.find(
-    (usuario) => usuario.correo === correo
+    (usuario) =>
+      usuario.correo.trim().toLowerCase() === correoBuscado
   )
 }
 
 
 export function registrarUsuario(nuevoUsuario) {
+  inicializarUsuarios()
+
   const usuarios = listarUsuarios()
 
   const existe = usuarios.find(
@@ -61,7 +76,7 @@ export function registrarUsuario(nuevoUsuario) {
     return false
   }
 
-  const { password, confirmarPassword, ...datosUsuario } = nuevoUsuario
+  const { confirmarPassword, ...datosUsuario } = nuevoUsuario
 
   usuarios.push({
     ...datosUsuario,
@@ -71,7 +86,6 @@ export function registrarUsuario(nuevoUsuario) {
   guardar(CLAVE, usuarios)
   return true
 }
-
 
 export function editarUsuario(run, datosActualizados) {
   const usuarios = listarUsuarios()

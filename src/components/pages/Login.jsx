@@ -15,62 +15,70 @@ export default function Login() {
   const [mensaje, setMensaje] = useState('')
 
   function manejarEnvio(e) {
-    e.preventDefault()
-    setMensaje('')
+  e.preventDefault()
+  setMensaje('')
 
-    const correoLimpio = correo.trim().toLowerCase()
+  const correoLimpio = correo.trim().toLowerCase()
 
-    const erroresEncontrados = validarLogin({
-      correo: correoLimpio,
-      password
-    })
+  const erroresEncontrados = validarLogin({
+    correo: correoLimpio,
+    password
+  })
 
-    setErrores(erroresEncontrados)
+  setErrores(erroresEncontrados)
 
-    if (Object.keys(erroresEncontrados).length > 0) {
-      return
-    }
-
-    // Cuentas de demostración del proyecto original
-    const cuentasDemo = [
-      { correo: 'admin@duoc.cl', tipoUsuario: 'administrador' },
-      { correo: 'vendedor@duoc.cl', tipoUsuario: 'vendedor' },
-      { correo: 'cliente@gmail.com', tipoUsuario: 'cliente' }
-    ]
-
-    const cuentaDemo = cuentasDemo.find(
-      (cuenta) => cuenta.correo === correoLimpio
-    )
-
-    if (!cuentaDemo || password !== '1234') {
-      setMensaje(
-        'Credenciales incorrectas. Por ahora solo están habilitadas las cuentas de prueba.'
-      )
-      return
-    }
-
-    const usuarioGuardado = buscarUsuarioPorCorreo(correoLimpio)
-
-    if (!usuarioGuardado) {
-      setMensaje('No se encontró la cuenta de prueba.')
-      return
-    }
-
-    iniciarSesion({
-      run: usuarioGuardado.run,
-      nombre: usuarioGuardado.nombre,
-      correo: usuarioGuardado.correo,
-      tipoUsuario: cuentaDemo.tipoUsuario
-    })
-
-    if (cuentaDemo.tipoUsuario === 'administrador') {
-      navigate('/admin/usuarios')
-    } else if (cuentaDemo.tipoUsuario === 'vendedor') {
-      navigate('/admin/productos')
-    } else {
-      navigate('/')
-    }
+  if (Object.keys(erroresEncontrados).length > 0) {
+    return
   }
+
+  // Cuentas de demostración
+  const cuentasDemo = [
+    { correo: 'admin@duoc.cl', tipoUsuario: 'administrador' },
+    { correo: 'vendedor@duoc.cl', tipoUsuario: 'vendedor' },
+    { correo: 'cliente@gmail.com', tipoUsuario: 'cliente' }
+  ]
+
+  const cuentaDemo = cuentasDemo.find(
+    (cuenta) => cuenta.correo === correoLimpio
+  )
+
+  // Buscar usuario registrado
+  const usuarioGuardado = buscarUsuarioPorCorreo(correoLimpio)
+
+  const esDemoValida = cuentaDemo && password === '1234'
+
+  const esClienteRegistrado =
+    !cuentaDemo &&
+    usuarioGuardado?.tipoUsuario === 'cliente' &&
+    usuarioGuardado.password === password
+
+  if (!usuarioGuardado || (!esDemoValida && !esClienteRegistrado)) {
+    setMensaje('Correo o contraseña incorrectos.')
+    return
+  }
+
+  // Mantener el rol correspondiente
+  const tipoUsuario = cuentaDemo
+    ? cuentaDemo.tipoUsuario
+    : 'cliente'
+
+  iniciarSesion({
+    run: usuarioGuardado.run,
+    nombre: usuarioGuardado.nombre,
+    correo: usuarioGuardado.correo,
+    tipoUsuario
+  })
+
+  // Dirigir según el rol
+  if (tipoUsuario === 'administrador') {
+    navigate('/admin/usuarios')
+  } else if (tipoUsuario === 'vendedor') {
+    navigate('/admin/productos')
+  } else {
+    navigate('/')
+  }
+}
+
 
   return (
     <section
