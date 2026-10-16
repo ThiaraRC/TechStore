@@ -1,4 +1,4 @@
-import { leer } from '../data/almacen'
+import { leer, guardar } from '../data/almacen.js';
 
 export const leerCarrito = () => leer('tech_carrito', [])
 
