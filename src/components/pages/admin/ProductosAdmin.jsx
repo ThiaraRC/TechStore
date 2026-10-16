@@ -3,15 +3,19 @@ import { Link } from 'react-router-dom'
 import { listarProductos, eliminarProducto } from '../../../data/productos'
 import { formatearPrecio } from '../../../utils/formato'
 import Button from '../../atoms/Button'
+import { useAuth } from '../../../context/AuthContext'
 
 export default function ProductosAdmin() {
   const [productos, setProductos] = useState(() => listarProductos())
   const [soloCriticos, setSoloCriticos] = useState(false)
+  const { usuario } = useAuth()
+  const esAdmin = usuario?.tipoUsuario === 'administrador'
 
   const esCritico = (p) => p.stock <= p.stockCritico
   const visibles = soloCriticos ? productos.filter(esCritico) : productos
 
   const eliminar = (producto) => {
+    if (!esAdmin) return
     if (!window.confirm('¿Eliminar el producto ' + producto.nombre + '?')) return
     eliminarProducto(producto.id)
     setProductos(listarProductos())
@@ -30,7 +34,7 @@ export default function ProductosAdmin() {
           />{' '}
           Mostrar solo productos críticos
         </label>
-        <Link to="/admin/productos/nuevo">Nuevo producto</Link>
+        {esAdmin && <Link to="/admin/productos/nuevo">Nuevo producto</Link>}
       </div>
 
       <p>{visibles.length} producto(s)</p>
@@ -47,23 +51,32 @@ export default function ProductosAdmin() {
                 <th>Categoría</th>
                 <th>Precio</th>
                 <th>Stock</th>
-                <th>Acciones</th>
+                {esAdmin && <th>Acciones</th>}
               </tr>
             </thead>
             <tbody>
               {visibles.map((p) => (
                 <tr key={p.id}>
                   <td>{p.codigo}</td>
-                  <td>{p.nombre}</td>
+                  <td><Link to={'/productos/' + p.id}>{p.nombre}</Link></td>
                   <td>{p.categoria}</td>
                   <td>{formatearPrecio(p.precio)}</td>
                   <td>
                     {p.stock} {esCritico(p) && <span className="chip chip-critico">Crítico</span>}
                   </td>
-                  <td className="d-flex gap-2">
-                    <Link to={'/admin/productos/' + p.id + '/editar'}>Editar</Link>
-                    <Button etiqueta="Eliminar" onClick={() => eliminar(p)} />
-                  </td>
+                 {esAdmin && (
+  <td>
+    <div className="d-flex gap-2">
+      <Link to={'/admin/productos/' + p.id + '/editar'}>
+        Editar
+      </Link>
+      <Button
+        etiqueta="Eliminar"
+        onClick={() => eliminar(p)}
+      />
+    </div>
+  </td>
+)}
                 </tr>
               ))}
             </tbody>

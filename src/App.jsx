@@ -28,6 +28,7 @@ import EditarProducto from './components/pages/admin/EditarProducto'
 import UsuariosAdmin from './components/pages/admin/UsuariosAdmin'
 import NuevoUsuario from './components/pages/admin/NuevoUsuario'
 import EditarUsuario from './components/pages/admin/EditarUsuario'
+import ProtegerAdmin from './components/guards/ProtegerAdmin'
 
 export default function App() {
   return (
@@ -53,8 +54,7 @@ export default function App() {
           <Route path="/pago-error" element={<PagoError />} />
         </Route>
 
-        {/* RUTAS DE ADMINISTRACIÓN */}
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/admin" element={<ProtegerAdmin><AdminLayout /></ProtegerAdmin>}>
           <Route index element={<Dashboard />} />
           <Route path="ordenes" element={<OrdenesAdmin />} />
           <Route path="ordenes/:id" element={<BoletaAdmin />} />
