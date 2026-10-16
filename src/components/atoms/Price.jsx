@@ -2,14 +2,18 @@ import { formatearPrecio } from '../../utils/formato'
 
 export default function Price({ valor, original }) {
   return (
-    <p>
-      Precio:{' '}
+    <p className="precio-producto">
+      <span className="precio-etiqueta">Precio:</span>{' '}
+
       {original ? (
-        <>
-          <s>{formatearPrecio(original)}</s>{' '}
-        </>
+        <s className="precio-original">
+          {formatearPrecio(original)}
+        </s>
       ) : null}
-      {formatearPrecio(valor)}
+
+      <span className="precio-actual">
+        {formatearPrecio(valor)}
+      </span>
     </p>
   )
 }

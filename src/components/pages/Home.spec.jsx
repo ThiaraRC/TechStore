@@ -1,11 +1,11 @@
 import { act } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import { montar, boton } from '../../test/montar'
+import { montar } from '../../test/montar'
 import { CarritoProvider } from '../../context/CarritoContext'
 import Home from './Home'
 
 describe('Home', () => {
-  it('muestra la portada y el botón "Ver productos" lleva al catálogo', () => {
+  it('muestra la portada y el enlace "Ver productos" lleva al catálogo', () => {
     const { contenedor, desmontar } = montar(
       <CarritoProvider>
         <Routes>
@@ -15,10 +15,13 @@ describe('Home', () => {
       </CarritoProvider>,
     )
 
-    expect(contenedor.querySelector('h2').textContent).toBe('Bienvenido a Tech Store')
+    expect(contenedor.querySelector('h1').textContent).toContain('tu día a día')
 
+    const enlace = [...contenedor.querySelectorAll('a')].find((a) =>
+      a.textContent.includes('Ver productos'),
+    )
     act(() => {
-      boton(contenedor, 'Ver productos').click()
+      enlace.click()
     })
     expect(contenedor.textContent).toContain('Pagina catalogo')
 
