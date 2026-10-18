@@ -9,7 +9,7 @@ describe('QuantitySelector', () => {
     vista.desmontar()
   })
 
-  it('8. los botones + y - llaman a sus funciones y muestran la cantidad', () => {
+  it('9. los botones + y - llaman a sus funciones y muestran la cantidad', () => {
     const onAumentar = jasmine.createSpy('onAumentar')
     const onDisminuir = jasmine.createSpy('onDisminuir')
 
