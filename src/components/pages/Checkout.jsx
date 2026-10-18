@@ -4,6 +4,7 @@ import { useCarrito } from '../../context/CarritoContext'
 import { useAuth } from '../../context/AuthContext'
 import { crearOrden } from '../../data/ordenes'
 import { regionesComunas, comunasPorRegion } from '../../data/regiones'
+import { buscarUsuarioPorCorreo } from '../../data/usuarios'
 import Price from '../atoms/Price'
 
 export default function Checkout() {
@@ -11,14 +12,18 @@ export default function Checkout() {
   const { items, total, vaciar } = useCarrito()
   const { usuario } = useAuth()
 
+  const usuarioCompleto = usuario
+    ? buscarUsuarioPorCorreo(usuario.correo)
+    : null
+
   const [form, setForm] = useState({
-    nombre: usuario?.nombre || '',
-    apellidos: usuario?.apellido || '',
-    correo: usuario?.correo || '',
-    calle: '',
+    nombre: usuarioCompleto?.nombre || '',
+    apellidos: usuarioCompleto?.apellido || '',
+    correo: usuarioCompleto?.correo || '',
+    calle: usuarioCompleto?.direccion || '',
     departamento: '',
-    region: '',
-    comuna: '',
+    region: usuarioCompleto?.region || '',
+    comuna: usuarioCompleto?.comuna || '',
     indicaciones: ''
   })
 
@@ -80,12 +85,10 @@ export default function Checkout() {
 
     const formularioValido = validar()
 
-    // Primero mostramos los errores del formulario
     if (!formularioValido) {
       return
     }
 
-    // Si el formulario está correcto, revisamos el carrito
     if (total <= 0) {
       navigate('/pago-error')
       return
@@ -115,9 +118,18 @@ export default function Checkout() {
     navigate(`/compra-exitosa/${nuevaOrden.id}`)
   }
 
+  const simularPagoRechazado = () => {
+    const formularioValido = validar()
+
+    if (!formularioValido) {
+      return
+    }
+
+    navigate('/pago-error')
+  }
+
   return (
     <section className="checkout-contenedor">
-
       <div className="checkout-encabezado">
         <span>COMPRA SEGURA</span>
 
@@ -129,10 +141,8 @@ export default function Checkout() {
       </div>
 
       <div className="row g-4 align-items-start">
-
         <div className="col-12 col-lg-7">
           <div className="checkout-tarjeta">
-
             <div className="checkout-titulo-seccion">
               <div className="checkout-icono">📦</div>
 
@@ -148,7 +158,6 @@ export default function Checkout() {
               noValidate
             >
               <div className="row g-3">
-
                 <div className="col-12 col-md-6">
                   <label htmlFor="nombre">
                     Nombre
@@ -331,7 +340,6 @@ export default function Checkout() {
                     rows="4"
                   />
                 </div>
-
               </div>
 
               <button
@@ -340,14 +348,20 @@ export default function Checkout() {
               >
                 Finalizar compra
               </button>
-            </form>
 
+              <button
+                type="button"
+                className="btn btn-outline-danger w-100 mt-3 checkout-boton-movil"
+                onClick={simularPagoRechazado}
+              >
+                Simular pago rechazado
+              </button>
+            </form>
           </div>
         </div>
 
         <div className="col-12 col-lg-5">
           <div className="checkout-resumen">
-
             <div className="checkout-resumen-titulo">
               <span>🛒</span>
 
@@ -403,11 +417,16 @@ export default function Checkout() {
               Finalizar compra
             </button>
 
+            <button
+              type="button"
+              className="btn btn-outline-danger w-100 mt-3 checkout-boton-escritorio"
+              onClick={simularPagoRechazado}
+            >
+              Simular pago rechazado
+            </button>
           </div>
         </div>
-
       </div>
-
     </section>
   )
 }
