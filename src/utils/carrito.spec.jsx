@@ -9,6 +9,9 @@ import {
 } from './carrito'
 
 import { guardar } from '../data/almacen'
+import { act } from 'react'
+import { montar } from '../test/montar'
+import { CarritoProvider, useCarrito } from '../context/CarritoContext'
 
 describe('Funciones del carrito', () => {
 
@@ -79,6 +82,66 @@ describe('Funciones del carrito', () => {
     ]
 
     expect(contarItems(carritoCantidades)).toBe(5)
+    
+    // Comprobar las acciones del contexto del carrito
+    localStorage.removeItem('tech_carrito')
+
+    function BotonesCarrito() {
+      const { agregar, aumentar, disminuir, quitar, vaciar, cantidad } = useCarrito()
+
+      return (
+        <div>
+          <button id="agregar" onClick={() => agregar(mouse)}>Agregar</button>
+          <button id="aumentar" onClick={() => aumentar(1)}>Aumentar</button>
+          <button id="disminuir" onClick={() => disminuir(1)}>Disminuir</button>
+          <button id="quitar" onClick={() => quitar(1)}>Quitar</button>
+          <button id="vaciar" onClick={() => vaciar()}>Vaciar</button>
+          <span id="cantidad">{cantidad}</span>
+        </div>
+      )
+    }
+
+    const { contenedor, desmontar } = montar(
+      <CarritoProvider>
+        <BotonesCarrito />
+      </CarritoProvider>
+    )
+
+    // Agregar producto
+    act(() => {
+      contenedor.querySelector('#agregar').click()
+    })
+    expect(contenedor.querySelector('#cantidad').textContent).toBe('1')
+
+    // Aumentar cantidad
+    act(() => {
+      contenedor.querySelector('#aumentar').click()
+    })
+    expect(contenedor.querySelector('#cantidad').textContent).toBe('2')
+
+    // Disminuir cantidad
+    act(() => {
+      contenedor.querySelector('#disminuir').click()
+    })
+    expect(contenedor.querySelector('#cantidad').textContent).toBe('1')
+
+    // Quitar producto
+    act(() => {
+      contenedor.querySelector('#quitar').click()
+    })
+    expect(contenedor.querySelector('#cantidad').textContent).toBe('0')
+
+    // Agregar nuevamente y vaciar el carrito
+    act(() => {
+      contenedor.querySelector('#agregar').click()
+    })
+    act(() => {
+      contenedor.querySelector('#vaciar').click()
+    })
+    expect(contenedor.querySelector('#cantidad').textContent).toBe('0')
+
+    desmontar()
+
   })
 
 
