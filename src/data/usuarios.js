@@ -129,6 +129,10 @@ export function editarUsuario(run, datosActualizados) {
 }
 
 export function eliminarUsuario(run) {
+    // Proteger los tres usuarios de demostración
+  if (usuariosIniciales.some((usuario) => usuario.run === run)) {
+    return false
+  }
   const usuarios = listarUsuarios()
 
   const usuariosActualizados = usuarios.filter(
@@ -171,10 +175,9 @@ export function crearUsuarioAdmin(nuevoUsuario) {
   }
 
   const {
-    password,
-    confirmarPassword,
-    ...datosUsuario
-  } = nuevoUsuario
+  confirmarPassword,
+  ...datosUsuario
+} = nuevoUsuario
 
   usuarios.push({
     ...datosUsuario,

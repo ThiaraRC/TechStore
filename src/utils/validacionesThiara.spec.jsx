@@ -185,6 +185,12 @@ describe('Pruebas de Thiara - TechStore', () => {
       correo: base.correo
     })).toBe(false)
     expect(editarUsuario('NO-EXISTE', usuarioPrueba)).toBe(false)
+    
+    // Comprobar que los tres usuarios de prueba están protegidos
+    expect(eliminarUsuario('111111111')).toBe(false)
+    expect(eliminarUsuario('222222222')).toBe(false)
+    expect(eliminarUsuario('123456785')).toBe(false)
+
     expect(eliminarUsuario(usuarioPrueba.run)).toBe(true)
     expect(eliminarUsuario(usuarioPrueba.run)).toBe(false)
   })
