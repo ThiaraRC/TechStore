@@ -6,6 +6,7 @@ import {
   actualizarProducto,
   eliminarProducto,
 } from './productos'
+import { validarProducto } from '../utils/validaciones'
 
 const CLAVE = 'tech_productos'
 
@@ -44,6 +45,56 @@ describe('Productos - operaciones CRUD', () => {
     expect(nuevo.id).toBe(9)
     expect(obtenerProducto(9).nombre).toBe('Cámara web')
     expect(listarProductos().length).toBe(9)
+    
+    // Comprobar las validaciones del producto
+    const productoValido = {
+      codigo: 'PRO009',
+      nombre: 'Cámara web',
+      descripcion: 'Cámara para computador',
+      precio: 10000,
+      stock: 4,
+      stockCritico: 2,
+      categoria: 'Accesorios'
+    }
+
+    // Producto correcto
+    expect(validarProducto(productoValido)).toEqual({})
+
+    // Campos obligatorios vacíos
+    const vacios = validarProducto({})
+    expect(vacios.codigo).toBeDefined()
+    expect(vacios.nombre).toBeDefined()
+    expect(vacios.precio).toBeDefined()
+    expect(vacios.stock).toBeDefined()
+    expect(vacios.categoria).toBeDefined()
+
+    // Datos que no cumplen las reglas
+    const errores = validarProducto({
+      ...productoValido,
+      codigo: 'AB',
+      nombre: 'A'.repeat(101),
+      descripcion: 'B'.repeat(501),
+      precio: -100,
+      stock: -2,
+      stockCritico: -1
+    })
+
+    expect(errores.codigo).toBeDefined()
+    expect(errores.nombre).toBeDefined()
+    expect(errores.descripcion).toBeDefined()
+    expect(errores.precio).toBeDefined()
+    expect(errores.stock).toBeDefined()
+    expect(errores.stockCritico).toBeDefined()
+    // Stock con decimales
+    const decimales = validarProducto({
+      ...productoValido,
+      stock: 2.5,
+      stockCritico: 1.5
+    })
+
+    expect(decimales.stock).toBeDefined()
+    expect(decimales.stockCritico).toBeDefined()
+
   })
 
   it('crea el primer producto con ID 1 si la lista está vacía', () => {

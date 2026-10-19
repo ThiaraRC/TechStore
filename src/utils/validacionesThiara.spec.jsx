@@ -3,7 +3,7 @@ import { montar, escribir, boton } from '../test/montar'
 import Registro from '../components/pages/Registro'
 import Login from '../components/pages/Login'
 import Contacto from '../components/pages/Contacto'
-import { AuthProvider } from '../context/AuthContext'
+import { AuthProvider, useAuth } from '../context/AuthContext'
 import {
   validarRun, validarRegistro, validarLogin, validarContacto
 } from './validaciones'
@@ -283,6 +283,53 @@ describe('Pruebas de Thiara - TechStore', () => {
       expect(sesionNueva?.correo).toBe(correo)
       expect(sesionNueva?.tipoUsuario).toBe(rol)
     })
+
+    
+    // Comprobar que el cierre de sesión funciona
+    function BotonCerrarSesion() {
+      const { usuario, cerrarSesion } = useAuth()
+
+      return (
+        <div>
+          <p id="estado-sesion">
+            {usuario ? usuario.correo : 'Sin sesión'}
+          </p>
+          <button onClick={cerrarSesion}>Cerrar sesión</button>
+        </div>
+      )
+    }
+
+    // Simular la eliminación de la sesión guardada
+    const eliminarSesion = spyOn(Storage.prototype, 'removeItem')
+      .and.callFake((clave) => {
+        delete memoria[clave]
+      })
+
+    // Montar el componente con AuthProvider
+    vista.desmontar()
+    vista = montar(
+      <AuthProvider>
+        <BotonCerrarSesion />
+      </AuthProvider>
+    )
+
+    // Comprobar que existe una sesión iniciada
+    expect(vista.contenedor.querySelector('#estado-sesion').textContent)
+      .toBe('ana@gmail.com')
+
+    // Cerrar sesión
+    act(() => {
+      boton(vista.contenedor, 'Cerrar sesión').click()
+    })
+
+    // Comprobar que se eliminó la sesión
+    expect(eliminarSesion).toHaveBeenCalledWith('tech_sesion')
+    expect(memoria.tech_sesion).toBeUndefined()
+
+    // Comprobar que React actualizó al usuario
+    expect(vista.contenedor.querySelector('#estado-sesion').textContent)
+      .toBe('Sin sesión')
+
   })
 
   // PRUEBA 3: CONTACTO
