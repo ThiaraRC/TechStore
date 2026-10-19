@@ -12,7 +12,7 @@ import { guardar } from '../data/almacen'
 
 describe('Funciones del carrito', () => {
 
-  it('9. disminuir resta 1 y elimina el item cuando llega a 0', () => {
+  it('10. agrega, aumenta, disminuye, elimina y cuenta items (producto normal, en oferta y repetido)', () => {
 
     const mouse = {
       id: 1,
@@ -82,7 +82,7 @@ describe('Funciones del carrito', () => {
   })
 
 
-  it('10. calcula el total leyendo el carrito desde localStorage simulado', () => {
+  it('11. calcula el total desde un localStorage simulado y maneja carrito ausente, error de lectura y guardado', () => {
 
     const guardado = [
       { id: 1, precio: 20000, cantidad: 2 },
