@@ -47,20 +47,19 @@ export default function Login() {
 
   const esDemoValida = cuentaDemo && password === '1234'
 
-  const esClienteRegistrado =
-    !cuentaDemo &&
-    usuarioGuardado?.tipoUsuario === 'cliente' &&
-    usuarioGuardado.password === password
+  const esUsuarioRegistrado =
+  !cuentaDemo &&
+  usuarioGuardado?.password === password
 
-  if (!usuarioGuardado || (!esDemoValida && !esClienteRegistrado)) {
+  if (!usuarioGuardado || (!esDemoValida && !esUsuarioRegistrado)) {
     setMensaje('Correo o contraseña incorrectos.')
     return
   }
 
   // Mantener el rol correspondiente
   const tipoUsuario = cuentaDemo
-    ? cuentaDemo.tipoUsuario
-    : 'cliente'
+  ? cuentaDemo.tipoUsuario
+  : usuarioGuardado.tipoUsuario
 
   iniciarSesion({
     run: usuarioGuardado.run,
